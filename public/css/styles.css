@@ -126,6 +126,8 @@ fieldset {
     border-radius: 10px;
     border: 1px dotted #555555;
     padding: 2px 6px;
-
+    background-color: #CABD9B;
 }
-
+#new-author {
+    display: none;
+}

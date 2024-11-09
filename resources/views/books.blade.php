@@ -27,7 +27,7 @@
         @else
             @foreach($books as $book)
                 <div class="body-group">
-                    <p>Title: {{ $book->name }}</p>
+                    <p>Title: {{ $book->title }}</p>
 
                 </div>
 

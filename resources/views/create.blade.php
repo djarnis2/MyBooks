@@ -21,11 +21,32 @@
         @csrf
         <div class="body-group">
             <label for="title">Title</label>
-            <input type="text" id="title" name="name" required>
+            <input type="text" id="title" name="title" required>
         </div>
         <div class="body-group">
             <label for="author">Author</label>
-            <input type="text" id="author" name="author" required>
+            <select id="author" name="author_id">
+                @forelse($authors as $author)
+                    <option value="{{ $author->id }}">{{ $author->name }}</option>
+                @empty
+                    <option disabled>No Authors Found</option>
+                @endforelse
+                    <option value="new">Add new author</option>
+            </select>
+        </div>
+        <div id="new-author-fields" class="body-group" style="display: none">
+            <label for="new-author-name">New author name</label>
+            <input type="text" name="new_author_name" id="new-author-name">
+
+            <label for="new-author-dob">Date of birth</label>
+            <input type="date" name="birth_date" id="new-author-dob">
+
+            <label for="new-author-dob">Date of death</label>
+            <input type="date" name="death_date" id="new-author-dod">
+
+
+            <label for="new-author-description">Description of author</label>
+            <textarea id="new-author-description" name="description" rows="15" placeholder="description..."></textarea>
         </div>
         <div class="body-group radio-group">
             <label><input type="radio" id="fiction" name="Type" value="Fiction"> Fiction</label>
@@ -52,21 +73,25 @@
                 <label><input type="checkbox" name="genre" value="science-fiction"> Science Fiction</label>
                 <label><input type="checkbox" name="genre" value="historical"> Historical</label>
                 <label><input type="checkbox" name="genre" value="fantasy"> Fantasy</label>
+                <label><input type="checkbox" name="genre" value="fairytale"> Fairytale</label>
+
             </fieldset>
         </div>
         <div class="body-group">
             <label for="notes">Notes</label>
             <textarea id="notes" name="Notes" rows="15" placeholder="your own notes..."></textarea>
         </div>
-{{--        File button is created dynamically--}}
-{{--        Submit button--}}
+        {{--        File button is created dynamically--}}
+        {{--        Submit button--}}
         <div class="body-group file-class"></div>
         <div class="body-group">
             <input class="button" id="submit" type="submit" name="submit" value="Submit">
         </div>
     </form>
 </div>
-<footer><x-footer /></footer>
+<footer>
+    <x-footer/>
+</footer>
 
 
 </body>

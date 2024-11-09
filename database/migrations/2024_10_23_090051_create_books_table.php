@@ -10,12 +10,15 @@ return new class extends Migration
      * Run the migrations.
      */
 
+
+
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('author');
+            $table->string('title');
+            $table->unsignedBigInteger('author_id')->nullable(); // when new author is added, the author_id is null at first
+            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
             $table->timestamps();
         });
     }

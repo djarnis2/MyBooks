@@ -22,7 +22,7 @@
             <p> {{$error}}</p>
 
         @else
-        <p>Title: {{ $book->name }}</p>
+        <p>Title: {{ $book->title }}</p>
         @endif
     </div>
 
