@@ -19,16 +19,16 @@
             {{ session('success') }}
         </div>
     @endif
-        <h2>My Library:</h2>
+    <h2>My Library:</h2>
 
     <div class="form-container">
-        @if($books->isEmpty())
-            <p>no books</p>
+        @if(!$books)
+            <p>No books yet</p>
         @else
             @foreach($books as $book)
                 <div class="body-group">
-                    <p>Title: {{ $book->title }}</p>
-
+                    <a class="body-links" href="{{ url('/books/' . $book->id) }}">Title: {{ $book->title }}</a>
+                    <!-- Display the associated file if it exists -->
                 </div>
 
             @endforeach

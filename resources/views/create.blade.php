@@ -46,15 +46,17 @@
 
 
             <label for="new-author-description">Description of author</label>
-            <textarea id="new-author-description" name="description" rows="15" placeholder="description..."></textarea>
+            <textarea id="new-author-description" name="description" rows="15" placeholder="description..." required></textarea>
         </div>
         <div class="body-group radio-group">
-            <label><input type="radio" id="fiction" name="Type" value="Fiction"> Fiction</label>
-            <label><input type="radio" id="non-fiction" name="Type" value="Non-fiction"> Non-Fiction</label>
+            <label><input type="radio" id="fiction" name="type" value="Fiction"> Fiction</label>
+            <label><input type="radio" id="non-fiction" name="type" value="Non-fiction"> Non-Fiction</label>
+            <label><input type="radio" id="educational" name="type" value="Educational"> Educational</label>
+            <label><input type="radio" id="biography" name="type" value="Biography"> Biography</label>
         </div>
         <div class="body-group">
             <label for="language">Language</label>
-            <select id="language" name="Language" size=1>
+            <select id="language" name="language" size=1>
                 <option value="English">English</option>
                 <option value="French">French</option>
                 <option value="German">German</option>
@@ -67,19 +69,15 @@
         <div class="body-group ">
             <fieldset>
                 <legend>Select Genres</legend>
-                <label><input type="checkbox" name="genre" value="short-stories"> Short Stories</label>
-                <label><input type="checkbox" name="genre" value="novel"> Novels</label>
-                <label><input type="checkbox" name="genre" value="poetry"> Poetry</label>
-                <label><input type="checkbox" name="genre" value="science-fiction"> Science Fiction</label>
-                <label><input type="checkbox" name="genre" value="historical"> Historical</label>
-                <label><input type="checkbox" name="genre" value="fantasy"> Fantasy</label>
-                <label><input type="checkbox" name="genre" value="fairytale"> Fairytale</label>
+                @foreach ($genres as $genre)
+                    <label><input type="checkbox" name="genre[]" value="{{ $genre->id }}" data-genre-name="{{ $genre->name }}"> {{ $genre->name }}</label>
+                @endforeach
 
             </fieldset>
         </div>
         <div class="body-group">
             <label for="notes">Notes</label>
-            <textarea id="notes" name="Notes" rows="15" placeholder="your own notes..."></textarea>
+            <textarea id="notes" name="notes" rows="15" placeholder="your own notes..."></textarea>
         </div>
         {{--        File button is created dynamically--}}
         {{--        Submit button--}}

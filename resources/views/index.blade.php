@@ -14,10 +14,18 @@
 <header>
     <x-header title="Welcome to MyBooks Library"/>
 </header>
+@if(session('success'))
+    <h2 class="centered">{{ session('success') }}</h2>
+@endif
 
-<h2>Login to start creating a library of books</h2>
-
-<footer><x-footer/></footer>
+@auth
+    <h2>You are logged in as {{ auth()->user()->name }}</h2>
+@else
+    <h2 class="centered">Login or register to start creating your own library of books</h2>
+@endauth
+    <footer>
+        <x-footer/>
+    </footer>
 
 </body>
 </html>

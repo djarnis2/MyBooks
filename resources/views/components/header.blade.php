@@ -7,8 +7,21 @@
             <a href="{{ route('books.index') }}">My Library</a>
 
         </div>
-        <div>
-            <input type="text" id="search" placeholder="search">
+        <div id="left-nav">
+            @auth
+                <button>{{ auth()->user()->name }}</button>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button>Logout</button>
+                </form>
+                <input type="text" id="search" placeholder="search">
+
+            @else
+                <a href="{{ route('login.index') }}" id="login"><button>Login</button></a>
+                <a href="{{ route('register.create') }} " id="login"><button>Register</button></a>
+                <input type="text" id="search" placeholder="search">
+            @endauth
+
         </div>
     </div>
 </nav>

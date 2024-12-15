@@ -8,6 +8,27 @@ body {
 
 }
 
+nav div {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds spacing between elements */
+}
+nav form {
+    padding: 10px;
+    margin-bottom: 10px;
+
+}
+
+nav input[type="text"]  {
+    !important;
+    margin-bottom: 0;
+
+}
+nav button {
+    padding: 5px 15px;
+    font-size: 20px;
+}
+
 h1 {
     text-align: left;
     margin: 20px;
@@ -29,6 +50,7 @@ h2 {
 header .menu {
     display: flex;
 }
+
 header div{
     background-color: #756B52;
     font-size: 40px;
@@ -80,6 +102,7 @@ body div {
 #header-links {
     margin-right: auto;
 }
+
 a {
     text-decoration: none;
     color: #cccccc;
@@ -90,13 +113,26 @@ a:hover {
     border-radius: 10px;
 }
 
+.centered {
+    text-align: center;
+}
+
 .body-group {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    width: 60%;
     background: #F4D992;
     margin: auto;
+}
+
+.body-links {
+    text-decoration: none;
+    color: #130101;
+    padding: 10px;
+}
+.body .a:hover {
+    background-color: #6C5928;
+    border-radius: 10px;
 }
 .alert-success {
     display: flex;

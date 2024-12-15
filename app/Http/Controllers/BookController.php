@@ -10,6 +10,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\File;
+use App\Models\Genre;
+
+
 
 
 class BookController extends Controller
@@ -18,17 +22,24 @@ class BookController extends Controller
     {
         return view('index');
     }
-    public function addBook(): View|Factory|Application
+//    public function addBook(): View|Factory|Application
+//    {
+//        $authors = Author::all();
+//        return view('create', ['authors' => $authors]);
+//    }
+
+    public function create(): View|Factory|Application
     {
         $authors = Author::all();
-        return view('create', ['authors' => $authors]);
-    }
-    public function getBooks(): View|Factory|Application
-    {
-        $allBooks = Book::all();
-        return view('books',['books' => $allBooks]);
+        $genres = Genre::all(); // Get all genres
+        return view('create', ['authors' => $authors, 'genres' => $genres]);
     }
 
+    public function allBooks(): View|Factory|Application
+    {
+        $allBooks = auth()->user()->books()->get();
+        return view('books', ['books' => $allBooks]);
+    }
 
 
     public function store(Request $request): RedirectResponse
@@ -42,11 +53,18 @@ class BookController extends Controller
                     $fail('Invalid author');
                 } // checking if author_id is new or id exists. else: fail
             }],
-            'new_author_name' => 'nullable|string|max:255',
+            'new_author_name' => 'nullable|string|max:255|unique:authors,name',
             'birth_date' => 'nullable|date',
             'death_date' => 'nullable|date',
             'description' => 'nullable|string',
+            'type' => 'nullable|string',// Add validation for type
+            'language' => 'nullable|string',// Add validation for language
+            'notes' => 'nullable|string', // Add validation for notes
+            'file' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'genre' => 'required|array',
+            'genre.*' => 'exists:genres,id'
         ]);
+
 
         Log::info('Validation passed', $validated);
 
@@ -65,25 +83,60 @@ class BookController extends Controller
             Log::info('New author created with ID:', ['id' => $author_id]);
         }
 
+        $notes = $request->input('notes');
+        if (empty($notes)) {
+            $notes = 'No notes provided';
+        }
         $book = Book::create([
             'title' => $request->input('title'),
             'author_id' => $author_id,
+            'type' => $request->input('type'),
+            'language' => $request->input('language'),
+            'notes' => $notes,
+            'user_id' => auth()->id()
         ]);
+
         Log::info('Book created successfully', ['book_id' => $book->id]);
+
+
+        // Attach genres if provided
+        if ($request->has('genre')) {
+            $book->genres()->attach($request->input('genre'));
+        }
+
+
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+            // Save the file
+            $path = $file->store('files', 'public'); // Correctly stores in 'storage/app/public/files'
+
+            Log::info('Attempting to save file at:', ['path' => $path]);
+
+            $fileModel = new File([
+                'book_id' => $book->id,
+                'file_name' => $filename,
+                'file_path' => $path,
+            ]);
+            $fileModel->save();
+
+            Log::info('File uploaded and saved', ['file_id' => $fileModel->id]);
+        }
+
 
         return redirect()->route('books.index')->with('success', 'Book "' . $book->title . '" added successfully');
     }
 
     public function show($id): View|Factory|Application
     {
-        $book = Book::find($id);
+        $book = auth()->user()->books()->where('id', $id)->first();
 
-        if(!$book){
+        if (!$book) {
             Log::warning("Book with {$id} not found");
-            return view('show', ['error' => "Book with {$id} not found"]);
+            return view('show', ['error' => "Book with id {$id} not found"]);
         }
 
-            return view('show', ['book' => $book]);
+        return view('show', ['book' => $book]);
     }
 }
 
