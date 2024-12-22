@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -22,6 +23,8 @@ class BookController extends Controller
     {
         return view('index');
     }
+
+
 //    public function addBook(): View|Factory|Application
 //    {
 //        $authors = Author::all();
@@ -35,9 +38,13 @@ class BookController extends Controller
         return view('create', ['authors' => $authors, 'genres' => $genres]);
     }
 
-    public function allBooks(): View|Factory|Application
+    public function allBooks(User $user): View|Factory|Application
     {
-        $allBooks = auth()->user()->books()->get();
+        $allBooks = $user->books()->get();
+        Log::info('user fetched successfully', ['user' => $user]);
+
+        Log::info('Book fetched successfully', ['books' => $allBooks]);
+
         return view('books', ['books' => $allBooks]);
     }
 
@@ -56,10 +63,10 @@ class BookController extends Controller
             'new_author_name' => 'nullable|string|max:255|unique:authors,name',
             'birth_date' => 'nullable|date',
             'death_date' => 'nullable|date',
-            'description' => 'nullable|string',
-            'type' => 'nullable|string',// Add validation for type
-            'language' => 'nullable|string',// Add validation for language
-            'notes' => 'nullable|string', // Add validation for notes
+            'description' => 'nullable',
+            'type' => 'nullable|string',
+            'language' => 'nullable|string',
+            'notes' => 'nullable|string',
             'file' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
             'genre' => 'required|array',
             'genre.*' => 'exists:genres,id'

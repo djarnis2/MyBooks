@@ -16,19 +16,31 @@ use Illuminate\Http\Request;
 
 // Route::method('url', [controller::class, 'name-of-function-in-controller']) -> name('name-of-route');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/books', [BookController::class, 'allBooks']) -> name('books.index');
+    Route::post('/books/store', [BookController::class, 'store']) -> name('books.store');
+    Route::get('/books/create', [BookController::class, 'create']) -> name('books.create');
+    Route::post('/logout', [LoginController::class, 'logout']) -> name('logout');
+    Route::get('/books/{id}', [BookController::class, 'show']) -> name('books.show');
+});
+
 Route::get('/', [BookController::class, 'index']) -> name('index');
-Route::post('/books/store', [BookController::class, 'store']) -> name('books.store');
-Route::get('/books/create', [BookController::class, 'create']) -> name('books.create');
-Route::get('/books', [BookController::class, 'allBooks']) -> name('books.index');
-Route::get('/books/{id}', [BookController::class, 'show']) -> name('books.show');
 Route::get('/register', [RegisterController::class, 'create']) -> name('register.create');
 Route::post('/register', [RegisterController::class, 'store']) -> name('register.store');
-Route::get('/login', [LoginController::class, 'loginform']) -> name('login.index');
+Route::get('/login', [LoginController::class, 'loginform']) -> name('login');
 Route::post('/login', [LoginController::class, 'authenticate']) -> name('login.authenticate');
-Route::post('/logout', [LoginController::class, 'logout']) -> name('logout');
+
 
 //Route::get('/csrf-token', function () {
 //    return csrf_token(); // Returnerer token som en string
 //});
 
+// route for layout
+Route::get('/test', function () {
+    return view('test');
+});
 
+
+Route::get('/testl', function () {
+    return view('testL');
+});
