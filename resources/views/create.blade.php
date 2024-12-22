@@ -90,7 +90,7 @@
             </div>
         </form>
     </div>
-    <script defer src="{{ asset('scripts/script.js') }}"></script>
+{{--    <script defer src="{{ asset('scripts/script.js') }}"></script>--}}
 </x-layout>
 
 {{--<footer>--}}
