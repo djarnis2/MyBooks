@@ -38,13 +38,12 @@ class BookController extends Controller
         return view('create', ['authors' => $authors, 'genres' => $genres]);
     }
 
-    public function allBooks(User $user): View|Factory|Application
+    public function allBooks(): View|Factory|Application
+        // removed parameter injection and used auth()->user() instead
     {
-        $allBooks = $user->books()->get();
-        Log::info('user fetched successfully', ['user' => $user]);
-
-        Log::info('Book fetched successfully', ['books' => $allBooks]);
-
+        $allBooks = auth()->user()->books()->get();
+//        Log::info('user fetched successfully', ['user' => $user]);
+//        Log::info('Book fetched successfully', ['books' => $allBooks]);
         return view('books', ['books' => $allBooks]);
     }
 
