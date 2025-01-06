@@ -22,6 +22,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/books/create', [BookController::class, 'create']) -> name('books.create');
     Route::post('/logout', [LoginController::class, 'logout']) -> name('logout');
     Route::get('/books/{id}', [BookController::class, 'show']) -> name('books.show');
+    Route::delete('/books/{id}', [BookController::class, 'destroy']) -> name('books.destroy');
+    Route::put('/books/{id}', [BookController::class, 'update'])->name('books.update');
+    Route::get('/books/{id}/edit', [BookController::class, 'edit'])->name('books.edit');
+
+
+
 });
 
 Route::get('/', [BookController::class, 'index']) -> name('index');
@@ -29,7 +35,6 @@ Route::get('/register', [RegisterController::class, 'create']) -> name('register
 Route::post('/register', [RegisterController::class, 'store']) -> name('register.store');
 Route::get('/login', [LoginController::class, 'loginform']) -> name('login');
 Route::post('/login', [LoginController::class, 'authenticate']) -> name('login.authenticate');
-
 
 //Route::get('/csrf-token', function () {
 //    return csrf_token(); // Returnerer token som en string

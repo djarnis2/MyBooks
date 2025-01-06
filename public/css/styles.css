@@ -3,8 +3,9 @@ body {
     font-family: sans-serif;
     font-size: 18px;
 }
+
 .form-container {
-    background-color: #CABD9B ;
+    background-color: #CABD9B;
 
 }
 
@@ -13,17 +14,19 @@ nav div {
     align-items: center;
     gap: 10px; /* Adds spacing between elements */
 }
+
 nav form {
     padding: 10px;
     margin-bottom: 10px;
 
 }
 
-nav input[type="text"]  {
-    !important;
+nav input[type="text"] {
+!important;
     margin-bottom: 0;
 
 }
+
 nav button {
     padding: 5px 15px;
     font-size: 20px;
@@ -34,11 +37,13 @@ h1 {
     margin: 20px;
     padding: 20px;
 }
+
 h2 {
     text-align: left;
     margin: 20px;
     padding: 20px;
 }
+
 .remove-class-hidden {
     display: none;
 }
@@ -51,11 +56,12 @@ header .menu {
     display: flex;
 }
 
-header div{
+header div {
     background-color: #756B52;
     font-size: 40px;
 }
-footer div{
+
+footer div {
     background-color: #756B52;
     font-size: 40px;
 }
@@ -64,12 +70,14 @@ label {
     margin-right: 20px;
     display: inline-block;
 }
+
 .button {
     font-family: sans-serif;
     font-size: 18px;
     border: solid 1px black;
     border-radius: 5px;
 }
+
 input[type="text"] {
     width: 25%;
     margin-bottom: 5px;
@@ -77,13 +85,16 @@ input[type="text"] {
     font-size: 18px;
 
 }
+
 input[type="radio"] {
     margin-right: 5px;
 }
+
 textarea {
     width: 100%;
     padding: 5px;
 }
+
 select {
     width: 20%;
     font-family: sans-serif;
@@ -108,6 +119,7 @@ a {
     color: #cccccc;
     padding: 10px;
 }
+
 a:hover {
     background-color: #6C5928;
     border-radius: 10px;
@@ -125,15 +137,26 @@ a:hover {
     margin: auto;
 }
 
+#buttons_span {
+    display: flex;
+    gap: 10px;
+}
+#buttons_span .button:hover {
+    background-color: #d1bb81;
+    border-radius: 10px;
+}
+
 .body-links {
     text-decoration: none;
     color: #130101;
     padding: 10px;
 }
+
 .body .a:hover {
     background-color: #6C5928;
     border-radius: 10px;
 }
+
 .alert-success {
     display: flex;
     align-items: flex-start;
@@ -151,10 +174,12 @@ a:hover {
     justify-content: left;
 
 }
+
 .upload-class .body-group {
     display: flex;
     flex-direction: column;
 }
+
 fieldset {
     display: flex;
     align-items: center;
@@ -164,6 +189,7 @@ fieldset {
     padding: 2px 6px;
     background-color: #CABD9B;
 }
+
 #new-author {
     display: none;
 }

@@ -138,3 +138,25 @@ document.getElementById("submit").onclick = (e) => {
 
 // })
 
+document.querySelector('form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'PUT', // or PATCH if your route uses PATCH
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: formData,
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert(data.success);
+                window.location.href = data.redirect_url; // Redirect based on the response
+            }
+        })
+        .catch((error) => console.error('Error:', error));
+});

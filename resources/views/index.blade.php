@@ -6,7 +6,7 @@
 {{--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">--}}
 {{--    <meta http-equiv="X-UA-Compatible" content="ie=edge">--}}
 {{--    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">--}}
-{{--    <script defer src="{{ asset('scripts/script.js') }}"></script>--}}
+{{--    <script defer src="{{ asset('scripts/create.js') }}"></script>--}}
 {{--    <title>MyBooks</title>--}}
 {{--</head>--}}
 

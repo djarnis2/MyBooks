@@ -5,6 +5,7 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <title>MyBooks</title>
     </head>
@@ -48,7 +49,6 @@
                  <div class="menu">
                      <div id="footer-links">
                          <a href="#">Go to the top</a>
-
                      </div>
                  </div>
              </nav>

@@ -8,8 +8,11 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Models\File;
 use App\Models\Genre;
@@ -104,7 +107,6 @@ class BookController extends Controller
 
         Log::info('Book created successfully', ['book_id' => $book->id]);
 
-
         // Attach genres if provided
         if ($request->has('genre')) {
             $book->genres()->attach($request->input('genre'));
@@ -128,8 +130,6 @@ class BookController extends Controller
 
             Log::info('File uploaded and saved', ['file_id' => $fileModel->id]);
         }
-
-
         return redirect()->route('books.index')->with('success', 'Book "' . $book->title . '" added successfully');
     }
 
@@ -143,6 +143,68 @@ class BookController extends Controller
         }
 
         return view('show', ['book' => $book]);
+    }
+
+    public function destroy($id): JsonResponse
+    {
+        $book = auth()->user()->books()->where('id', $id)->first();
+        if (!$book) {
+            Log::warning("Book with {$id} not found");
+            return response ()->json(['error' => "Book with id {$id} not found"]);
+        }
+        $book->delete();
+        return response ()->json(['success' => "Book with id {$id} deleted"]);
+    }
+
+
+    public function edit($id): View|Factory|Application
+    {
+        $book = Book::findOrFail($id); // Fetch the book to be edited
+        $authors = Author::all();      // Fetch all authors
+        $genres = Genre::all();        // Fetch all genres
+
+        return view('create', [
+            'book' => $book,
+            'authors' => $authors,
+            'genres' => $genres,
+        ]);
+    }
+
+    public function update(Request $request, $id): RedirectResponse
+    {
+        \Log::info('Update Request', [
+            'method' => $request->method(),
+            'id' => $id,
+            'data' => $request->all(),
+        ]);
+        Log::info('Update method called', ['id' => $id, 'data' => $request->all()]);
+        $book = auth()->user()->books()->findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'type' => 'nullable|string',
+            'language' => 'nullable|string',
+            'notes' => 'nullable',
+            'file' => 'nullable|file|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'genre' => 'required|array',
+            'genre.*' => 'exists:genres,id'
+        ]);
+
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('uploads/books', 'public'); // Save to `storage/app/public/uploads/books`
+            $validated['file_path'] = $filePath;
+        }
+
+        $book->update([
+            'title' => $validated['title'],
+            'type' => $validated['type'],
+            'language' => $validated['language'],
+            'notes' => $validated['notes'],
+        ]);
+
+        $book->genres()->sync($validated['genre']);
+
+        return redirect()->route('books.index')->with('success', 'Book updated successfully');
     }
 }
 

@@ -6,7 +6,7 @@
 {{--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">--}}
 {{--    <meta http-equiv="X-UA-Compatible" content="ie=edge">--}}
 {{--    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">--}}
-{{--    <script defer src="{{ asset('scripts/script.js') }}"></script>--}}
+{{--    <script defer src="{{ asset('scripts/create.js') }}"></script>--}}
 {{--    <title>Books</title>--}}
 {{--</head>--}}
 {{--<header>--}}
@@ -28,9 +28,9 @@
                 <p>No books yet</p>
             @else
                 @foreach($books as $book)
-                    <div class="body-group">
-                        <a class="body-links" href="{{ url('/books/' . $book->id) }}">Title: {{ $book->title }}</a>
-                        <!-- Display the associated file if it exists -->
+                    <div class="body-group book-group">
+                        <a class="body-links" data-id="{{ $book->id }}" href="{{ url('/books/' . $book->id) }}">Title: {{ $book->title }}</a>
+                        <span id="buttons_span" class="buttons"></span>
                     </div>
 
                 @endforeach
@@ -38,7 +38,7 @@
 
         </div>
     </div>
-
+    <script defer src="{{ asset('scripts/books.js') }}"></script>
 </x-layout>
 
 {{--<footer>--}}
