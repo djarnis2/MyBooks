@@ -21,7 +21,7 @@ class LoginController extends Controller
             return redirect('/')->with('success', 'Login Successful');
         }
 
-        return back()->withErrors('failure', 'Login Failed')->withInput($request->except('password'));
+        return back()->withErrors(['login' => 'Wrong username or password.'])->withInput($request->except('loginpassword'));
     }
 
     public function logout(Request $request) {

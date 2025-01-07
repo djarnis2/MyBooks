@@ -18,8 +18,6 @@ use App\Models\File;
 use App\Models\Genre;
 
 
-
-
 class BookController extends Controller
 {
     public function index(): View|Factory|Application
@@ -150,10 +148,10 @@ class BookController extends Controller
         $book = auth()->user()->books()->where('id', $id)->first();
         if (!$book) {
             Log::warning("Book with {$id} not found");
-            return response ()->json(['error' => "Book with id {$id} not found"]);
+            return response()->json(['error' => "Book with id {$id} not found"]);
         }
         $book->delete();
-        return response ()->json(['success' => "Book with id {$id} deleted"]);
+        return response()->json(['success' => "Book with id {$id} deleted"]);
     }
 
 
@@ -206,6 +204,21 @@ class BookController extends Controller
 
         return redirect()->route('books.index')->with('success', 'Book updated successfully');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->validate(['query' => 'required|string|max:255'])['query'];
+
+        $query = trim(strip_tags($query));
+
+
+        $books = Book::where('user_id', auth()->id())
+            ->search($query)
+            ->with(['author', 'genres', 'files'])
+            ->get();
+        return view('search-results', compact('books', 'query'));
+    }
+
 }
 
 

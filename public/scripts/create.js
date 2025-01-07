@@ -32,6 +32,7 @@ if (authorSelect && newAuthorField) { // check if they exist
 const addNewFile = document.createElement('button');
 addNewFile.innerText = 'Add file';
 addNewFile.className = 'button';
+let count = 0;
 
 // Node collection of nodes with class = file-class
 const fileElements = document.getElementsByClassName('file-class');
@@ -53,24 +54,28 @@ const addFileInput = () => {
     newFileInput.type = 'file';
     newFileInput.className = 'button';
     newFileInput.name = 'file';
-    newFileNode.appendChild(newFileInput);
+
 
     // Make a delete-button for removing file-input
     const deleteFile = document.createElement('button');
     deleteFile.innerText = 'Remove';
     deleteFile.className = 'button';
-    newFileNode.appendChild(deleteFile);
 
-    // Enters the new node into the document at
-    lastFileNode.parentNode.insertBefore(newFileNode, lastFileNode.nextSibling);
-
-    // Event listener to delete file-input
-    deleteFile.addEventListener('click', () => {
-        newFileNode.remove();
-    });
-    // Check if the form contains the newFileNode
-    const form = document.querySelector('form');
-    console.log(form.contains(newFileNode)); // Should log `true`
+    // control that max 5 files are added
+    if (count < 5) {
+        count += 1;
+        newFileNode.appendChild(newFileInput);
+        newFileNode.appendChild(deleteFile);
+        // Enters the new node into the document at
+        lastFileNode.parentNode.insertBefore(newFileNode, lastFileNode.nextSibling);
+        // Event listener to delete file-input
+        deleteFile.addEventListener('click', () => {
+            count -= 1;
+            newFileNode.remove();
+        });
+    } else {
+        alert("Max 5 files can be added");
+    }
 };
 
 // addNewFile click handler - adds new file input

@@ -20,7 +20,7 @@
         <ul>
 
             @if(isset($error))
-                <p> {{$error}}</p>
+                <p class="error-message"> {{$error}}</p>
 
             @else
                 @if(isset($book))

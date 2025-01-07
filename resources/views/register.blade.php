@@ -12,14 +12,24 @@
 {{--    <x-header title="New User"/>--}}
 {{--</header>--}}
 <x-layout>
-    <h1>Register new User</h1>
-    <form action="{{ route('register.create') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="name" placeholder="name">
-        <input type="text" name="email" placeholder="email">
-        <input type="password" name="password" placeholder="password">
-        <button>Register</button>
-    </form>
+    <h1 class="centered">Register new User</h1>
+    @if($errors->all())
+        <div class="error-message centered">
+            @foreach($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+
+        </div>
+    @endif
+    <div class="centered form-container">
+        <form action="{{ route('register.create') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input class="button-class" type="text" name="name" placeholder="name">
+            <input class="button-class" type="text" name="email" placeholder="email">
+            <input class="button-class" type="password" name="password" placeholder="password">
+            <button class="button-class">Register</button>
+        </form>
+    </div>
 </x-layout>
 
 {{--</body>--}}

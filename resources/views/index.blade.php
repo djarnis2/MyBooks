@@ -1,34 +1,14 @@
-{{--<!doctype html>--}}
-{{--<html lang="en">--}}
-{{--<head>--}}
-{{--    <meta charset="UTF-8">--}}
-{{--    <meta name="viewport"--}}
-{{--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">--}}
-{{--    <meta http-equiv="X-UA-Compatible" content="ie=edge">--}}
-{{--    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">--}}
-{{--    <script defer src="{{ asset('scripts/create.js') }}"></script>--}}
-{{--    <title>MyBooks</title>--}}
-{{--</head>--}}
-
-{{--<body>--}}
-{{--<header>--}}
-{{--    <x-header title="Welcome to MyBooks Library"/>--}}
-{{--</header>--}}
 <x-layout>
-    @if(session('success'))
-        <h2 class="centered">{{ session('success') }}</h2>
-    @endif
+    <div class="bg-custom">
+        @if(session('success'))
+            <h1 class="centered white top-text">{{ session('success') }}</h1>
+        @endif
 
-    @auth
-        <h2>You are logged in as {{ auth()->user()->name }}</h2>
-    @else
-        <h2 class="centered">Login or register to start creating your own library of books</h2>
-    @endauth
+        @auth
+            <h1 class="centered white middle-text">You are logged in as {{ auth()->user()->name }}</h1>
+        @else
+            <h1 class="centered white top-text">Login or register to start creating your own library of books</h1>
+        @endauth
+    </div>
+
 </x-layout>
-
-{{--    <footer>--}}
-{{--        <x-footer/>--}}
-{{--    </footer>--}}
-
-{{--</body>--}}
-{{--</html>--}}
