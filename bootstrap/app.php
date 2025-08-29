@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ApiAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(['auth',UserAuthenticated::class]);
+        $middleware->alias([
+            'auth' => UserAuthenticated::class,
+            'api-auth' => ApiAuthenticated::class,
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
