@@ -50,6 +50,37 @@ document.querySelectorAll('.book-group').forEach((bookItem) => {
 
 
 
-
-
-
+//
+// if (type === 'delete') {
+//     button.addEventListener('click', () => {
+//         console.log('id is ' + `/books/${bookId}`);
+//
+//         const xhttp = new XMLHttpRequest();
+//
+//         // Åbn anmodningen
+//         xhttp.open('DELETE', `/books/${bookId}`, true);
+//
+//         // Sæt nødvendige headers
+//         xhttp.setRequestHeader('Content-Type', 'application/json');
+//         xhttp.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+//
+//         // Håndter responsen
+//         xhttp.onreadystatechange = function () {
+//             if (xhttp.readyState === XMLHttpRequest.DONE) {
+//                 if (xhttp.status === 200) {
+//                     if (method === 'DELETE') {
+//                         bookItem.remove(); // Fjern bogelementet fra DOM'en
+//                     } else {
+//                         console.log(message);
+//                     }
+//                 } else {
+//                     console.error(`Failed to ${type} the book with id ${bookId}: ${xhttp.status}`);
+//                 }
+//             }
+//         };
+//
+//         // Send anmodningen
+//         xhttp.send();
+//     });
+// }
+//

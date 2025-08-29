@@ -92,6 +92,8 @@ document.getElementById("submit").onclick = (e) => {
     // finding node elements in tag element, that matches input, ... etc
     let details = ''; // defines an empty string
 
+
+
     const checkboxes = document.querySelectorAll('input[name="genre[]"]');
 
     // Alert for not submitting at least one genre
@@ -144,13 +146,28 @@ document.getElementById("submit").onclick = (e) => {
 // })
 
 document.querySelector('form').addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault(); // stops html-form-submission
 
     const form = event.target;
     const formData = new FormData(form);
 
+    // Get correct method from html form by checking for @method('PUT')
+    // @method is set to name="_method" by laravel
+    // If _method isn't set, then the form.method was set to post
+    const methodInput = form.querySelector('input[name="_method"]');
+    const method = methodInput ? methodInput.value : form.method || 'POST';
+
+    //
+    // // extra validation for genres
+    // const checkboxes = form.querySelectorAll('input[name="genre[]"]');
+    // const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+    // if (!isChecked) {
+    //     alert('Please select at least one genre.');
+    //     return // stops AJAX
+    // }
+
     fetch(form.action, {
-        method: 'PUT', // or PATCH if your route uses PATCH
+        method: method, // from create.blade
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         },

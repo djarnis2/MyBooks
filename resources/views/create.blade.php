@@ -118,6 +118,7 @@
                 </div>
             </form>
         </div>
+
         <script defer src="{{ asset('scripts/create.js') }}"></script>
     </div>
 </x-layout>

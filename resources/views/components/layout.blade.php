@@ -14,19 +14,19 @@
 <header>
 
     <nav>
-        <div class="menu">
+        <div>
             <div id="header-links">
-                <a href="{{ route('index') }}">Home</a>
-                <a href="{{ route('books.create') }}">New Book</a>
-                <a href="{{ route('books.index') }}">My Library</a>
+                <a class="a" href="{{ route('index') }}">Home</a>
+                <a class="a" href="{{ route('books.create') }}">New Book</a>
+                <a class="a" href="{{ route('books.index') }}">My Library</a>
 
             </div>
             <div id="left-nav">
                 @auth
-                    <button>{{ auth()->user()->name }}</button>
+                    <button class="a">{{ auth()->user()->name }}</button>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button>Logout</button>
+                        <button class="a">Logout</button>
                     </form>
                     <form action="{{ route('books.search') }}" method="GET">
                         <input class="searchbar" type="text" name="query" id="search" placeholder="search in books">
